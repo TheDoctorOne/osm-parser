@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class BaseRootModel<T extends BaseAttribute> {
+public abstract class BaseRouteModel<T extends BaseAttribute> {
 	protected T attribute;
 	protected List<Tag> Tags = new ArrayList<>();
 	protected List<Tag.Type> tagTypes = new ArrayList<>();
@@ -31,7 +31,8 @@ public abstract class BaseRootModel<T extends BaseAttribute> {
 	public List<Tag.Type> getTypes() {
 		if(tagTypes.size() == 0) {
 			for(Tag tag : getTags())
-				tagTypes.add(tag.type);
+				if(!tagTypes.contains(tag.type))
+					tagTypes.add(tag.type);
 			if(tagTypes.size() > 1) {
 				// Filtering out Tag.Type.OTHER if has any other property.
 				tagTypes.removeAll(Collections.singleton(Tag.Type.OTHER));
@@ -41,7 +42,7 @@ public abstract class BaseRootModel<T extends BaseAttribute> {
 	}
 
 	public boolean isType(Tag.Type type) {
-		return getTypes().contains(type);
+		return getTags().size() > 0 && getTypes().contains(type);
 	}
 
 	public boolean isTypeAll(List<Tag.Type> types) {
@@ -61,6 +62,10 @@ public abstract class BaseRootModel<T extends BaseAttribute> {
 				return true;
 		}
 		return false;
+	}
+
+	public boolean hasTags() {
+		return Tags.size() > 0;
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class OSMRelation extends BaseRootModel<RelationAttribute> {
+public class OSMRelation extends BaseRouteModel<RelationAttribute> {
     private List<Member> members = new ArrayList<>();
     private OSMDocument owner = null;
     private List<LatLon> latLons = new ArrayList<>();

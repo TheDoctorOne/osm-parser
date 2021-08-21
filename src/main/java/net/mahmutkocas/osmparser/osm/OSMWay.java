@@ -9,11 +9,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class OSMWay extends BaseRootModel<WayAttribute> {
+public class OSMWay extends BaseRouteModel<WayAttribute> {
 
 
 

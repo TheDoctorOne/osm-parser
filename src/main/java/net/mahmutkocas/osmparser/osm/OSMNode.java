@@ -9,8 +9,7 @@ import org.w3c.dom.Node;
 import java.util.Collections;
 import java.util.List;
 
-public class OSMNode extends BaseRootModel<NodeAttribute> {
-
+public class OSMNode extends BaseRouteModel<NodeAttribute> {
 	public OSMNode() {
 		attribute = new NodeAttribute();
 	}

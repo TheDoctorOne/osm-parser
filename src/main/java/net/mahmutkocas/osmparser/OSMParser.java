@@ -1,9 +1,6 @@
 package net.mahmutkocas.osmparser;
 
-import net.mahmutkocas.osmparser.osm.OSMBounds;
-import net.mahmutkocas.osmparser.osm.OSMNode;
-import net.mahmutkocas.osmparser.osm.OSMRelation;
-import net.mahmutkocas.osmparser.osm.OSMWay;
+import net.mahmutkocas.osmparser.osm.*;
 import net.mahmutkocas.osmparser.osm.child.Tag;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -15,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public final class OSMParser {
 	private static class XMLParser {
@@ -64,7 +62,9 @@ public final class OSMParser {
 
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 		System.out.println(Tag.Type.AMENITY.toString());
-		parseXML("map.xml");
+		OSMDocument osmDocument = parseXML("map.xml");
+		List<BaseRouteModel> baseRouteModels = osmDocument.getType(Tag.Type.WATER);
+		System.out.println(baseRouteModels);
 	}
 	
 }
