@@ -1,6 +1,7 @@
 package net.mahmutkocas.osmparser;
 
 import net.mahmutkocas.osmparser.model.OSMNode;
+import net.mahmutkocas.osmparser.model.OSMWay;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -30,16 +31,26 @@ public final class OSMParser {
 	}
 	
 	public static OSMDocument parseDocument(Document document) {
+		OSMDocument osmDocument = new OSMDocument();
 		NodeList nodeList = document.getDocumentElement().getChildNodes();
 		for(int i=0;i<nodeList.getLength();i++) {
 			Node node = nodeList.item(i);
-			OSMNode.PARSE(node);
+			OSMNode parsedNode = OSMNode.PARSE(node);
+			if(parsedNode != null) {
+				osmDocument.addNode(parsedNode);
+				continue;
+			}
+			OSMWay parsedWay = OSMWay.PARSE(node, osmDocument.getNodes());
+			if(parsedWay != null) {
+				osmDocument.addWay(parsedWay);
+				continue;
+			}
 		}
-		return new OSMDocument();
+		return osmDocument;
 	}
 
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-		parseXML("map.osm");
+		parseXML("map.xml");
 	}
 	
 }

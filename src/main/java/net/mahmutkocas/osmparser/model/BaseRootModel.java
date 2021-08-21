@@ -22,4 +22,11 @@ public abstract class BaseRootModel<T extends BaseAttribute> {
 
 	public void parseAttr(Node node) { getAttribute().parse(node); }
 
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "{" +
+				"attribute=" + attribute +
+				", Tags=" + Tags +
+				"}\n";
+	}
 }

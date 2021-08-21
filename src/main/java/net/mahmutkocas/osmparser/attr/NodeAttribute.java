@@ -1,6 +1,7 @@
 package net.mahmutkocas.osmparser.attr;
 
 import net.mahmutkocas.osmparser.OSMKeys;
+import net.mahmutkocas.osmparser.Utils;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -16,8 +17,8 @@ public class NodeAttribute extends BaseAttribute {
 			return attr;
 		}
 
-		latDegree = Double.parseDouble(checkAttribute(OSMKeys.NODE_ATTR.LAT, attr, "0"));
-		lonDegree = Double.parseDouble(checkAttribute(OSMKeys.NODE_ATTR.LON, attr, "0"));
+		latDegree = Double.parseDouble(Utils.checkIfAttrAvailable(OSMKeys.NODE_ATTR.LAT, attr, "0"));
+		lonDegree = Double.parseDouble(Utils.checkIfAttrAvailable(OSMKeys.NODE_ATTR.LON, attr, "0"));
 
 		return attr;
 	}

@@ -11,12 +11,16 @@ public class OSMNode extends BaseRootModel<NodeAttribute> {
 	}
 
 	public static OSMNode PARSE(Node node) {
-		OSMNode osmNode = new OSMNode();
 
 		if(node.getNodeName().equals(OSMKeys.ROOT.NODE)) {
+			OSMNode osmNode = new OSMNode();
 			osmNode.parseAttr(node);
+			if(node.hasChildNodes()) {
+				osmNode.getTags().addAll(Tag.PARSE_TAGS(node.getChildNodes()));
+			}
 			return osmNode;
 		}
 		return null;
 	}
+
 }

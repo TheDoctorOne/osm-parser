@@ -29,6 +29,10 @@ public class OSMKeys {
 		public static String LON = "lon";
 	}
 	
+	public static class ND_ATTR {
+		public static String REF = "ref";
+	}
+
 	public static class MEMBER_ATTR {
 		public static String TYPE = "type";
 		public static String REF = "ref";

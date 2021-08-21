@@ -1,6 +1,7 @@
 package net.mahmutkocas.osmparser.attr;
 
 import net.mahmutkocas.osmparser.OSMKeys;
+import net.mahmutkocas.osmparser.Utils;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -22,13 +23,13 @@ public abstract class BaseAttribute {
 			return attr;
 		}
 
-		String ID 			= checkAttribute(OSMKeys.ATTR.ID, attr, "0");
-		String VERSION 		= checkAttribute(OSMKeys.ATTR.VERSION, attr, "0");
-		USER 				= checkAttribute(OSMKeys.ATTR.USER, attr, "anonymous");
-		String UID 			= checkAttribute(OSMKeys.ATTR.UID, attr, "0");
-		String VISIBLE 		= checkAttribute(OSMKeys.ATTR.VISIBLE, attr, "true");
-		CHANGE_SET		 	= checkAttribute(OSMKeys.ATTR.CHANGE_SET, attr, "");
-		TIMESTAMP 			= checkAttribute(OSMKeys.ATTR.TIMESTAMP, attr, "");
+		String ID 			= Utils.checkIfAttrAvailable(OSMKeys.ATTR.ID, attr, "0");
+		String VERSION 		= Utils.checkIfAttrAvailable(OSMKeys.ATTR.VERSION, attr, "0");
+		USER 				= Utils.checkIfAttrAvailable(OSMKeys.ATTR.USER, attr, "anonymous");
+		String UID 			= Utils.checkIfAttrAvailable(OSMKeys.ATTR.UID, attr, "0");
+		String VISIBLE 		= Utils.checkIfAttrAvailable(OSMKeys.ATTR.VISIBLE, attr, "true");
+		CHANGE_SET		 	= Utils.checkIfAttrAvailable(OSMKeys.ATTR.CHANGE_SET, attr, "");
+		TIMESTAMP 			= Utils.checkIfAttrAvailable(OSMKeys.ATTR.TIMESTAMP, attr, "");
 
 		this.ID = Long.parseLong(ID);
 		this.VERSION = Double.parseDouble(VERSION);
@@ -38,13 +39,16 @@ public abstract class BaseAttribute {
 		return attr;
 	}
 
-	protected String checkAttribute(String key, NamedNodeMap map, String defaultValue) {
-		try {
-			String s = map.getNamedItem(key).getNodeValue();
-			if (s !=null && !s.trim().equals("")){
-				return s;
-			}
-		} catch (Exception ignored) {}
-		return defaultValue;
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "{" +
+				"ID=" + ID +
+				", VERSION=" + VERSION +
+				", USER='" + USER + '\'' +
+				", UID=" + UID +
+				", VISIBLE=" + VISIBLE +
+				", CHANGE_SET='" + CHANGE_SET + '\'' +
+				", TIMESTAMP='" + TIMESTAMP + '\'' +
+				'}';
 	}
 }
