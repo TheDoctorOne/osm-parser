@@ -53,10 +53,13 @@ public class OSMRelation extends BaseRootModel<RelationAttribute> {
     }
 
     @Override
-    public synchronized List<LatLon> getPath() {
+    public List<LatLon> getPath() {
         if(latLons.size() > 0)
             return new ArrayList<>(latLons);
+        return new ArrayList<>(calculatePath());
+    }
 
+    protected synchronized List<LatLon> calculatePath() {
         Map<Long, OSMNode> nodeMap = getOwner().getNodes();
         Map<Long, OSMWay> wayMap = getOwner().getWays();
         for(Member member : members) {

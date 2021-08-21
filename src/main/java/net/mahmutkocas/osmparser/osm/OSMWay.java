@@ -54,10 +54,13 @@ public class OSMWay extends BaseRootModel<WayAttribute> {
 	}
 
 	@Override
-	public synchronized List<LatLon> getPath() {
+	public List<LatLon> getPath() {
 		if(latLons.size() > 0)
 			return new ArrayList<>(latLons);
+		return new ArrayList<>(calculatePath());
+	}
 
+	protected synchronized List<LatLon> calculatePath() {
 		for(OSMNode node : OSMNodes) {
 			latLons.addAll(node.getPath());
 		}
