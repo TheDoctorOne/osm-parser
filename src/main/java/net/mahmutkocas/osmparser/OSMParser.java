@@ -59,12 +59,5 @@ public final class OSMParser {
 		}
 		return osmDocument;
 	}
-
-	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
-		System.out.println(Tag.Type.AMENITY.toString());
-		OSMDocument osmDocument = parseXML("map.xml");
-		List<BaseRouteModel> baseRouteModels = osmDocument.getType(Tag.Type.WATER);
-		System.out.println(baseRouteModels);
-	}
 	
 }
