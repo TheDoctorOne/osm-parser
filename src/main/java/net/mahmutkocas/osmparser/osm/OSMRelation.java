@@ -60,6 +60,10 @@ public class OSMRelation extends BaseRootModel<RelationAttribute> {
     }
 
     protected synchronized List<LatLon> calculatePath() {
+        if(latLons.size() > 0)
+            return latLons;
+
+        ArrayList<LatLon> latLons = new ArrayList<>();
         Map<Long, OSMNode> nodeMap = getOwner().getNodes();
         Map<Long, OSMWay> wayMap = getOwner().getWays();
         for(Member member : members) {
@@ -72,6 +76,8 @@ public class OSMRelation extends BaseRootModel<RelationAttribute> {
                     break;
             }
         }
+        this.latLons = latLons;
+        
         return latLons;
     }
 

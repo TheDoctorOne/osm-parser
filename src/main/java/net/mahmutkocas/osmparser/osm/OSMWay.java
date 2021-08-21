@@ -61,9 +61,15 @@ public class OSMWay extends BaseRootModel<WayAttribute> {
 	}
 
 	protected synchronized List<LatLon> calculatePath() {
+		if(latLons.size() > 0)
+			return latLons;
+
+		ArrayList<LatLon> latLons = new ArrayList<>();
 		for(OSMNode node : OSMNodes) {
 			latLons.addAll(node.getPath());
 		}
+		this.latLons = latLons;
+
 		return latLons;
 	}
 }
