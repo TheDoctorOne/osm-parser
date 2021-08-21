@@ -1,9 +1,9 @@
 package net.mahmutkocas.osmparser;
 
-import net.mahmutkocas.osmparser.model.OSMBounds;
-import net.mahmutkocas.osmparser.model.OSMNode;
-import net.mahmutkocas.osmparser.model.OSMRelation;
-import net.mahmutkocas.osmparser.model.OSMWay;
+import net.mahmutkocas.osmparser.osm.OSMBounds;
+import net.mahmutkocas.osmparser.osm.OSMNode;
+import net.mahmutkocas.osmparser.osm.OSMRelation;
+import net.mahmutkocas.osmparser.osm.OSMWay;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +23,7 @@ public class OSMDocument {
     }
 
     public void addRelation(OSMRelation relation) {
+        relation.setOwner(this);
         relations.put(relation.getId(), relation);
     }
 

@@ -1,18 +1,21 @@
-package net.mahmutkocas.osmparser.model;
+package net.mahmutkocas.osmparser.osm;
 
 import net.mahmutkocas.osmparser.OSMKeys;
 import net.mahmutkocas.osmparser.Utils;
-import net.mahmutkocas.osmparser.attr.NodeAttribute;
-import net.mahmutkocas.osmparser.attr.WayAttribute;
+import net.mahmutkocas.osmparser.model.LatLon;
+import net.mahmutkocas.osmparser.osm.attr.WayAttribute;
+import net.mahmutkocas.osmparser.osm.child.Tag;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class OSMWay extends BaseRootModel<WayAttribute> {
 	private List<OSMNode> OSMNodes = new ArrayList<>();
+	private List<LatLon> latLons = new ArrayList<>();
 
 
 	public OSMWay() {
@@ -48,5 +51,16 @@ public class OSMWay extends BaseRootModel<WayAttribute> {
 
 	public void addNode(OSMNode OSMNode) {
 		OSMNodes.add(OSMNode);
+	}
+
+	@Override
+	public synchronized List<LatLon> getPath() {
+		if(latLons.size() > 0)
+			return new ArrayList<>(latLons);
+
+		for(OSMNode node : OSMNodes) {
+			latLons.addAll(node.getPath());
+		}
+		return latLons;
 	}
 }

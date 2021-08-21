@@ -1,4 +1,4 @@
-package net.mahmutkocas.osmparser.attr;
+package net.mahmutkocas.osmparser.osm.attr;
 
 import net.mahmutkocas.osmparser.OSMKeys;
 import net.mahmutkocas.osmparser.Utils;

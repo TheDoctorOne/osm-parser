@@ -1,8 +1,13 @@
-package net.mahmutkocas.osmparser.model;
+package net.mahmutkocas.osmparser.osm;
 
 import net.mahmutkocas.osmparser.OSMKeys;
-import net.mahmutkocas.osmparser.attr.NodeAttribute;
+import net.mahmutkocas.osmparser.model.LatLon;
+import net.mahmutkocas.osmparser.osm.attr.NodeAttribute;
+import net.mahmutkocas.osmparser.osm.child.Tag;
 import org.w3c.dom.Node;
+
+import java.util.Collections;
+import java.util.List;
 
 public class OSMNode extends BaseRootModel<NodeAttribute> {
 
@@ -23,4 +28,8 @@ public class OSMNode extends BaseRootModel<NodeAttribute> {
 		return null;
 	}
 
+	@Override
+	public List<LatLon> getPath() {
+		return Collections.singletonList(LatLon.fromDegrees(getAttribute().latDegree, getAttribute().lonDegree));
+	}
 }

@@ -1,6 +1,8 @@
-package net.mahmutkocas.osmparser.model;
+package net.mahmutkocas.osmparser.osm;
 
-import net.mahmutkocas.osmparser.attr.BaseAttribute;
+import net.mahmutkocas.osmparser.model.LatLon;
+import net.mahmutkocas.osmparser.osm.attr.BaseAttribute;
+import net.mahmutkocas.osmparser.osm.child.Tag;
 import org.w3c.dom.Node;
 
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public abstract class BaseRootModel<T extends BaseAttribute> {
 	public long getId() { return getAttribute().ID; }
 
 	public void parseAttr(Node node) { getAttribute().parse(node); }
+
+	public abstract List<LatLon> getPath();
 
 	@Override
 	public String toString() {

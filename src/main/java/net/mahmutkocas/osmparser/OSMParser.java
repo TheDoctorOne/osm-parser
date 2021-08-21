@@ -1,9 +1,9 @@
 package net.mahmutkocas.osmparser;
 
-import net.mahmutkocas.osmparser.model.OSMBounds;
-import net.mahmutkocas.osmparser.model.OSMNode;
-import net.mahmutkocas.osmparser.model.OSMRelation;
-import net.mahmutkocas.osmparser.model.OSMWay;
+import net.mahmutkocas.osmparser.osm.OSMBounds;
+import net.mahmutkocas.osmparser.osm.OSMNode;
+import net.mahmutkocas.osmparser.osm.OSMRelation;
+import net.mahmutkocas.osmparser.osm.OSMWay;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
