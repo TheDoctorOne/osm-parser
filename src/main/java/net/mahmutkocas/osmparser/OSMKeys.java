@@ -1,6 +1,6 @@
 package net.mahmutkocas.osmparser;
 
-public class XMLKeys {
+public class OSMKeys {
 	public static class ROOT {
 		public static String BOUNDS = "bounds";
 		public static String NODE = "node";

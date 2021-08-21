@@ -1,6 +1,8 @@
 package net.mahmutkocas.osmparser;
 
+import net.mahmutkocas.osmparser.model.OSMNode;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -29,6 +31,15 @@ public final class OSMParser {
 	
 	public static OSMDocument parseDocument(Document document) {
 		NodeList nodeList = document.getDocumentElement().getChildNodes();
+		for(int i=0;i<nodeList.getLength();i++) {
+			Node node = nodeList.item(i);
+			OSMNode.PARSE(node);
+		}
+		return new OSMDocument();
+	}
+
+	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
+		parseXML("map.osm");
 	}
 	
 }
