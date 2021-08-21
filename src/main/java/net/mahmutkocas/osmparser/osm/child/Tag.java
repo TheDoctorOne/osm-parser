@@ -6,16 +6,63 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Tag {
+	public enum Type {
+		AERIALWAY,
+		AEROWAY,
+		AMENITY,
+		BARRIER,
+		BOUNDARY,
+		BUILDING,
+		CRAFT,
+		EMERGENCY,
+		GEOLOGICAL,
+		HEALTHCARE,
+		HIGHWAY,
+		HISTORIC,
+		LANDUSE,
+		LEISURE,
+		MAN_MADE,
+		MILITARY,
+		NATURAL,
+		OFFICE,
+		PLACE,
+		POWER,
+		PUBLIC_TRANSPORT,
+		RAILWAY,
+		ROUTE,
+		SHOP,
+		SPORT,
+		TELECOM,
+		TOURISM,
+		WATER,
+		WATERWAY,
+		OTHER,
+		;
+
+		@Override
+		public String toString() {
+			return super.toString().toLowerCase(Locale.ENGLISH);
+		}
+	}
+
+	public static Map<String, Type> TagTypeMap = new HashMap<>();
+	static {
+		for(Type t : Type.values()) {
+			TagTypeMap.put(t.toString(), t);
+		}
+	}
+
+	public final Type type;
 	public final String key;
 	public final String value;
 	
 	public Tag(String key, String value) {
 		this.key = key;
 		this.value = value;
+		type = TagTypeMap.getOrDefault(key, Type.OTHER);
 	}
 
 	public static List<Tag> PARSE_TAGS(NodeList nodes) {

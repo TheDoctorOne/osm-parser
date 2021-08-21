@@ -77,7 +77,7 @@ public class OSMRelation extends BaseRootModel<RelationAttribute> {
             }
         }
         this.latLons = latLons;
-        
+
         return latLons;
     }
 

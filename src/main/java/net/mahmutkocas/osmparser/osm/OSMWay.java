@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 public class OSMWay extends BaseRootModel<WayAttribute> {
+
+
+
 	private List<OSMNode> OSMNodes = new ArrayList<>();
 	private List<LatLon> latLons = new ArrayList<>();
 

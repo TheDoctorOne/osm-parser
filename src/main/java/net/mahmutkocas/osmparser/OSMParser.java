@@ -4,6 +4,7 @@ import net.mahmutkocas.osmparser.osm.OSMBounds;
 import net.mahmutkocas.osmparser.osm.OSMNode;
 import net.mahmutkocas.osmparser.osm.OSMRelation;
 import net.mahmutkocas.osmparser.osm.OSMWay;
+import net.mahmutkocas.osmparser.osm.child.Tag;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -62,6 +63,7 @@ public final class OSMParser {
 	}
 
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
+		System.out.println(Tag.Type.AMENITY.toString());
 		parseXML("map.xml");
 	}
 	
