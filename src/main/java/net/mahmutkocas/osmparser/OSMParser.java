@@ -1,6 +1,7 @@
 package net.mahmutkocas.osmparser;
 
 import net.mahmutkocas.osmparser.model.OSMNode;
+import net.mahmutkocas.osmparser.model.OSMRelation;
 import net.mahmutkocas.osmparser.model.OSMWay;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -44,6 +45,10 @@ public final class OSMParser {
 			if(parsedWay != null) {
 				osmDocument.addWay(parsedWay);
 				continue;
+			}
+			OSMRelation osmRelation = OSMRelation.PARSE(node);
+			if(osmRelation != null) {
+				osmDocument.addRelation(osmRelation);
 			}
 		}
 		return osmDocument;

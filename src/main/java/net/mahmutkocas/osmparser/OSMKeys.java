@@ -24,6 +24,12 @@ public class OSMKeys {
 		public static String TIMESTAMP = "timestamp";
 	}
 	
+	public static class BOUNDS_ATTR {
+		public static String MIN_LAT = "minlat";
+		public static String MIN_LON = "minlon";
+		public static String MAX_LAT = "maxlat";
+		public static String MAX_LON = "maxlon";
+	}
 	public static class NODE_ATTR {
 		public static String LAT = "lat";
 		public static String LON = "lon";
