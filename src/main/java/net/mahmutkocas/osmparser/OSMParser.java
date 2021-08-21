@@ -1,5 +1,6 @@
 package net.mahmutkocas.osmparser;
 
+import net.mahmutkocas.osmparser.model.OSMBounds;
 import net.mahmutkocas.osmparser.model.OSMNode;
 import net.mahmutkocas.osmparser.model.OSMRelation;
 import net.mahmutkocas.osmparser.model.OSMWay;
@@ -36,6 +37,12 @@ public final class OSMParser {
 		NodeList nodeList = document.getDocumentElement().getChildNodes();
 		for(int i=0;i<nodeList.getLength();i++) {
 			Node node = nodeList.item(i);
+			if(osmDocument.getBounds() == null) {
+				OSMBounds bounds = OSMBounds.PARSE(node);
+				if(bounds != null) {
+					osmDocument.setBounds(bounds);
+				}
+			}
 			OSMNode parsedNode = OSMNode.PARSE(node);
 			if(parsedNode != null) {
 				osmDocument.addNode(parsedNode);
