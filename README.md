@@ -1,6 +1,10 @@
 # Open Street Map XML/.OSM Parser
 ## Purpose
 Parsing ".osm" file which is either exported from "openstreetmap.org" or generated in similar manner with Open Street Map.
+## Gradle
+```groovy
+implementation group: 'net.mahmutkocas', name: 'osmparser', version: '0.3'
+```
 ## How to use
 OSMParser has static function called "parseXML(String)", by passing file path one can easily parse the XML file.
 
