@@ -2,6 +2,8 @@ package net.mahmutkocas.osmparser;
 
 import net.mahmutkocas.osmparser.osm.*;
 import net.mahmutkocas.osmparser.osm.child.Tag;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,10 +11,42 @@ import java.util.List;
 import java.util.Map;
 
 public class OSMDocument {
+    public static double VERSION = 0.6;
+
+    public static class META {
+        public final double version;
+        public final String generator;
+        public final String copyright;
+        public final String attribution;
+        public final String license;
+
+        public META(double version, String generator, String copyright, String attribution, String license) {
+            this.version = version;
+            this.generator = generator;
+            this.copyright = copyright;
+            this.attribution = attribution;
+            this.license = license;
+        }
+
+        public static META PARSE(Node node) {
+            if(node.getNodeName().equals(OSMKeys.ROOT.OSM)) {
+                NamedNodeMap map = node.getAttributes();
+                double version = Double.parseDouble(Utils.checkIfAttrAvailable(OSMKeys.META.VERSION, map, "0"));
+                String generator = Utils.checkIfAttrAvailable(OSMKeys.META.GENERATOR, map, "0");
+                String copyright = Utils.checkIfAttrAvailable(OSMKeys.META.COPYRIGHT, map, "0");
+                String attribution = Utils.checkIfAttrAvailable(OSMKeys.META.ATTRIBUTION, map, "0");
+                String license = Utils.checkIfAttrAvailable(OSMKeys.META.LICENSE, map, "0");
+                return new META(version, generator, copyright, attribution, license);
+            }
+            return null;
+        }
+    }
+
+    private META meta = null;
+    private OSMBounds bounds = null;
     private Map<Long, OSMNode> nodes = new HashMap<>();
     private Map<Long, OSMWay> ways = new HashMap<>();
     private Map<Long, OSMRelation> relations = new HashMap<>();
-    private OSMBounds bounds = null;
 
     public void addNode(OSMNode node) {
         nodes.put(node.getId(), node);
@@ -57,6 +91,14 @@ public class OSMDocument {
 
     protected void setBounds(OSMBounds bounds) {
         this.bounds = bounds;
+    }
+
+    public META getMeta() {
+        return meta;
+    }
+
+    protected void setMeta(META meta) {
+        this.meta = meta;
     }
 
     /**

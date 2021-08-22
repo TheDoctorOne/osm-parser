@@ -1,7 +1,16 @@
 package net.mahmutkocas.osmparser;
 
 public class OSMKeys {
+	public static class META {
+		public static String VERSION = "version";
+		public static String GENERATOR = "generator";
+		public static String COPYRIGHT = "copyright";
+		public static String ATTRIBUTION = "attribution";
+		public static String LICENSE = "license";
+	}
+
 	public static class ROOT {
+		public static String OSM = "osm";
 		public static String BOUNDS = "bounds";
 		public static String NODE = "node";
 		public static String WAY = "way";

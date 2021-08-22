@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public final class OSMParser {
 	private static class XMLParser {
@@ -34,6 +35,17 @@ public final class OSMParser {
 	public static OSMDocument parseDocument(Document document) {
 		OSMDocument osmDocument = new OSMDocument();
 		NodeList nodeList = document.getDocumentElement().getChildNodes();
+		{
+			// Meta Check
+			Node node = document.getDocumentElement();
+			OSMDocument.META meta = OSMDocument.META.PARSE(node);
+			if(meta != null) {
+				osmDocument.setMeta(meta);
+				if(meta.version != OSMDocument.VERSION) {
+					Logger.getLogger(OSMDocument.class.getName()).warning("XML version may not be supported! Expected: " + OSMDocument.VERSION + " got: " + (meta.version == 0 ? "none" : meta.version));
+				}
+			}
+		}
 		for(int i=0;i<nodeList.getLength();i++) {
 			Node node = nodeList.item(i);
 			if(osmDocument.getBounds() == null) {
