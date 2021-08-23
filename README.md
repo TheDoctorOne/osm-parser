@@ -21,7 +21,7 @@ OSMDocument provides parsed OSM Nodes, Ways and Relations with getter methods.
 Returned values are maps. Keys are the IDs of the elements. By calling ".values()" method, one can get values.
 
 ```java
-    List<OSMNode> nodes = nodeMap.values(); // Raw Node List.
+    List<OSMNode> nodes = wayMap.values(); // Raw Node List.
 ```
 ### Filtering by Tags
 Ex:
@@ -36,6 +36,7 @@ Ex:
 // Assuming routeModels contain at least one item.
 List<LatLon> highway = routeModels.get(0).getPath();
 ```
+Note: OSM's XML file may not contain all the information about "Relation"s it provides. So "getPath()" method may throw NullPointerException for these relations.
 
 
  
