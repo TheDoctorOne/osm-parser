@@ -36,6 +36,7 @@ Ex:
 // Assuming routeModels contain at least one item.
 List<LatLon> highway = routeModels.get(0).getPath();
 ```
+Note: OSM's XML file may not contain all the information about "Relation"s it provides. So "getPath()" method may throw NullPointerException for these relations.
 
 
  
