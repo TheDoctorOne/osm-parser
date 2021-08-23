@@ -1,37 +1,39 @@
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/TheDoctorOne/osm-parser/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+# Open Street Map XML/.OSM Parser
+## Purpose
+Parsing ".osm" file which is either exported from "openstreetmap.org" or generated in similar manner with Open Street Map.
+## Gradle
+```groovy
+implementation group: 'net.mahmutkocas', name: 'osmparser', version: '0.3'
 ```
+## How to use
+OSMParser has static function called "parseXML(String)", by passing file path one can easily parse the XML file.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+```java
+    OSMDocument osmDocument = OSMParser.parseXML(file);
+```
+OSMDocument provides parsed OSM Nodes, Ways and Relations with getter methods.
 
-### Jekyll Themes
+```java
+    Map<Long, OSMNode> nodeMap = osmDocument.getNodes(); // Returns nodes.
+    Map<Long, OSMWay> wayMap = osmDocument.getWays(); // Returns ways.
+    Map<Long, OSMRelation> relationMap = osmDocument.getRelations(); // Returns relations.
+```
+Returned values are maps. Keys are the IDs of the elements. By calling ".values()" method, one can get values.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/TheDoctorOne/osm-parser/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+```java
+    List<OSMNode> nodes = nodeMap.values(); // Raw Node List.
+```
+### Filtering by Tags
+Ex:
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+```java
+List<BasicRouteModel> routeModels = osmDocument.getType(Type.Tag.HIGHWAY) // Only returns highways.
+```
+Possible BasicRouteModels are OSMNode, OSMWay, OSMRelation.  Also see "isTypeAll" and "isTypeAny".
+### Getting Vector Data of the Route Model(Lat Long)
+Ex:
+```java
+// Assuming routeModels contain at least one item.
+List<LatLon> highway = routeModels.get(0).getPath();
+```
+Note: OSM's XML file may not contain all the information about "Relation"s it provides. So "getPath()" method may throw NullPointerException for these relations.
