@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public final class OSMParser {
-	private static class XMLParser {
+	public static class XMLParser {
 		static DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		private static Document parseXML(File file) throws ParserConfigurationException, IOException, SAXException {
 			DocumentBuilder builder = factory.newDocumentBuilder();
@@ -24,10 +24,18 @@ public final class OSMParser {
 		}
 	}
 	
-	public static OSMDocument parseXML(String filePath) throws ParserConfigurationException, SAXException, IOException {
+	public static OSMDocument parseOSM(String filePath) throws ParserConfigurationException, SAXException, IOException {
 		return parseXML(new File(filePath));
 	}
 	
+	public static OSMDocument parseOSM(File file) throws IOException, SAXException, ParserConfigurationException {
+		return parseDocument(XMLParser.parseXML(file));
+	}
+
+	public static OSMDocument parseXML(String filePath) throws ParserConfigurationException, SAXException, IOException {
+		return parseXML(new File(filePath));
+	}
+
 	public static OSMDocument parseXML(File file) throws IOException, SAXException, ParserConfigurationException {
 		return parseDocument(XMLParser.parseXML(file));
 	}

@@ -3,6 +3,7 @@ package net.mahmutkocas.osmparser.osm;
 import net.mahmutkocas.osmparser.OSMDocument;
 import net.mahmutkocas.osmparser.OSMKeys;
 import net.mahmutkocas.osmparser.model.LatLon;
+import net.mahmutkocas.osmparser.model.MemberNotExistsException;
 import net.mahmutkocas.osmparser.osm.attr.RelationAttribute;
 import net.mahmutkocas.osmparser.osm.child.Member;
 import net.mahmutkocas.osmparser.osm.child.Tag;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OSMRelation extends BaseRouteModel<RelationAttribute> {
-    private List<Member> members = new ArrayList<>();
+    private final List<Member> members = new ArrayList<>();
     private OSMDocument owner = null;
     private List<LatLon> latLons = new ArrayList<>();
 
@@ -52,14 +53,26 @@ public class OSMRelation extends BaseRouteModel<RelationAttribute> {
         return owner;
     }
 
+
+    /**
+     * If Member ID not present in the current {@link OSMDocument} throws {@link MemberNotExistsException}
+     * Also see getPath(boolean)
+     * */
     @Override
     public List<LatLon> getPath() {
-        if(latLons.size() > 0)
-            return new ArrayList<>(latLons);
-        return new ArrayList<>(calculatePath());
+        return getPath(false);
     }
 
-    protected synchronized List<LatLon> calculatePath() {
+    /**
+     * If Member ID not present in the current {@link OSMDocument} and the input boolean is false throws {@link MemberNotExistsException}
+     * */
+    public List<LatLon> getPath(boolean ignoreException) {
+        if(latLons.size() > 0)
+            return new ArrayList<>(latLons);
+        return new ArrayList<>(calculatePath(ignoreException));
+    }
+
+    protected synchronized List<LatLon> calculatePath(boolean ignoreException) {
         if(latLons.size() > 0)
             return latLons;
 
@@ -69,9 +82,21 @@ public class OSMRelation extends BaseRouteModel<RelationAttribute> {
         for(Member member : members) {
             switch (member.type) {
                 case NODE:
-                    latLons.addAll(nodeMap.get(member.ref).getPath());
+                    OSMNode node = nodeMap.get(member.ref);
+                    if(node == null)
+                        if(ignoreException)
+                            continue;
+                        else
+                            throw new MemberNotExistsException();
+                    latLons.addAll(node.getPath());
                     break;
                 case WAY:
+                    OSMWay way = wayMap.get(member.ref);
+                    if(way == null)
+                        if(ignoreException)
+                            continue;
+                        else
+                            throw new MemberNotExistsException();
                     latLons.addAll(wayMap.get(member.ref).getPath());
                     break;
             }
@@ -79,6 +104,15 @@ public class OSMRelation extends BaseRouteModel<RelationAttribute> {
         this.latLons = latLons;
 
         return latLons;
+    }
+
+    /**
+     * Members are not mapped but Member Objects have reference id. <br>
+     * Using the parsed {@link OSMDocument}, members can be resolved.
+     * But its not guaranteed that {@link OSMDocument} will contain all referenced IDs.
+     * */
+    public List<Member> getMembers() {
+        return members;
     }
 
     @Override
