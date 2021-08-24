@@ -29,7 +29,7 @@ Returned values are maps. Keys are the IDs of the elements. By calling ".values(
 Ex:
 
 ```java
-List<BasicRouteModel> routeModels = osmDocument.getType(Type.Tag.HIGHWAY) // Only returns highways.
+List<BasicRouteModel> routeModels = osmDocument.getType(Tag.Type.HIGHWAY) // Only returns highways.
 ```
 Possible BasicRouteModels are OSMNode, OSMWay, OSMRelation.  Also see "isTypeAll" and "isTypeAny".
 ### Getting Vector Data of the Route Model(Lat Long)
