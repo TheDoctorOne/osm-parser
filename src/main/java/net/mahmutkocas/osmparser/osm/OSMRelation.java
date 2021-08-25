@@ -87,7 +87,7 @@ public class OSMRelation extends BaseRouteModel<RelationAttribute> {
                         if(ignoreException)
                             continue;
                         else
-                            throw new MemberNotExistsException();
+                            throw new MemberNotExistsException(member);
                     latLons.addAll(node.getPath());
                     break;
                 case WAY:
@@ -96,7 +96,7 @@ public class OSMRelation extends BaseRouteModel<RelationAttribute> {
                         if(ignoreException)
                             continue;
                         else
-                            throw new MemberNotExistsException();
+                            throw new MemberNotExistsException(member);
                     latLons.addAll(wayMap.get(member.ref).getPath());
                     break;
             }
