@@ -31,14 +31,14 @@ Ex:
 ```java
 List<BasicRouteModel> routeModels = osmDocument.getType(Tag.Type.HIGHWAY) // Only returns highways.
 ```
-Possible BasicRouteModels are OSMNode, OSMWay, OSMRelation.  Also see "isTypeAll" and "isTypeAny".
+Possible BasicRouteModels are OSMNode, OSMWay, OSMRelation.  Also see "getTypeAll" and "getTypeAny".
 ### Getting Vector Data of the Route Model(Lat Long)
 Ex:
 ```java
 // Assuming routeModels contain at least one item.
 List<LatLon> highway = routeModels.get(0).getPath();
 ```
-Note: OSM's XML file may not contain all the information about "Relation"s it provides. So "getPath()" method may throw NullPointerException for these relations.
+Note: OSM's XML file may not contain all the information about "Relation"s it provides. So "getPath()" method may throw MemberNotExistsException for these relations. MemberNotExistsException contains the member which is the cause of the exception. 
 
 
  
